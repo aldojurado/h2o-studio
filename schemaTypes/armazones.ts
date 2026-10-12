@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import colorItem from './colorItem'
+import {MedidaInput} from './components/MedidaInput'
 
 export default defineType({
   name: 'armazones',
@@ -27,10 +28,11 @@ export default defineType({
       name: 'medida',
       title: 'Medida (mm)',
       type: 'object',
+      components: {input: MedidaInput},
       fields: [
         defineField({name: 'ancho_de_lente', title: 'Ancho de lente', type: 'number'}),
         defineField({name: 'ancho_de_puente', title: 'Ancho de puente', type: 'number'}),
-        defineField({name: 'alto_del_lente', title: 'Alto del lente', type: 'number'}),
+        defineField({name: 'alto_del_lente', title: 'Alto de lente', type: 'number'}),
         defineField({name: 'largo_de_patilla', title: 'Largo de patilla', type: 'number'}),
       ],
     }),
