@@ -18,19 +18,6 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'base',
-      title: 'Base',
-      type: 'boolean',
-      initialValue: false,
-    }),
-    defineField({
-      name: 'index',
-      title: 'Index',
-      type: 'string',
-      options: {list: ['CR', 'Hi-index', 'Poly', '1.67', '1.71', '1.74', 'Cristal']},
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
       name: 'tipo_de_mica',
       title: 'Tipo de mica',
       type: 'string',
@@ -56,6 +43,26 @@ export default defineType({
             : true,
         ),
     }),
+    defineField({
+      name: 'base',
+      title: 'Base',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineRango({
+      name: 'rango_base',
+      title: 'Rango de base',
+      paso: 1,
+      minimo: 0,
+      aplica: esBase,
+    }),
+    defineField({
+      name: 'index',
+      title: 'Index',
+      type: 'string',
+      options: {list: ['CR', 'Hi-index', 'Poly', '1.67', '1.71', '1.74', 'Cristal']},
+      validation: (rule) => rule.required(),
+    }),
     defineRango({
       name: 'rango_esfera',
       title: 'Rango de esfera',
@@ -69,13 +76,6 @@ export default defineType({
       paso: 0.25,
       obligatorio: false,
       aplica: (doc) => !esBase(doc) && doc?.tipo_de_mica === 'monofocal',
-    }),
-    defineRango({
-      name: 'rango_base',
-      title: 'Rango de base',
-      paso: 1,
-      minimo: 0,
-      aplica: esBase,
     }),
     defineRango({
       name: 'rango_adicion',
@@ -116,7 +116,7 @@ export default defineType({
 
     defineField({
       name: 'colores',
-      title: 'Colores',
+      title: 'Colores disponibles',
       type: 'array',
       of: [colorItem],
     }),
