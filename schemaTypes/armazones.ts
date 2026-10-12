@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import colorItem from './colorItem'
 
 export default defineType({
   name: 'armazones',
@@ -37,11 +38,16 @@ export default defineType({
       name: 'colores',
       title: 'Colores',
       type: 'array',
-      of: [{type: 'string'}],
-      options: {layout: 'tags'},
+      of: [colorItem],
+    }),
+    defineField({
+      name: 'imagen',
+      title: 'Imagen',
+      type: 'image',
+      options: {hotspot: true},
     }),
   ],
   preview: {
-    select: {title: 'marca', subtitle: 'modelo'},
+    select: {title: 'marca', subtitle: 'modelo', media: 'imagen'},
   },
 })
