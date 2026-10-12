@@ -1,5 +1,8 @@
-import {defineField, defineType} from 'sanity'
+import {defineField, defineType, type SanityDocument} from 'sanity'
 import colorItem from './colorItem'
+import {defineRango} from './rango'
+
+const esBase = (doc: SanityDocument | undefined) => doc?.base === true
 
 export default defineType({
   name: 'micas',
@@ -53,18 +56,38 @@ export default defineType({
             : true,
         ),
     }),
+    defineRango({
+      name: 'rango_esfera',
+      title: 'Rango de esfera',
+      paso: 0.25,
+      aplica: (doc) => !esBase(doc),
+    }),
+    defineRango({
+      name: 'rango_cilindro',
+      title: 'Rango de cilindro',
+      description: '(Opcional)',
+      paso: 0.25,
+      obligatorio: false,
+      aplica: (doc) => !esBase(doc) && doc?.tipo_de_mica === 'monofocal',
+    }),
+    defineRango({
+      name: 'rango_base',
+      title: 'Rango de base',
+      paso: 1,
+      minimo: 0,
+      aplica: esBase,
+    }),
+    defineRango({
+      name: 'rango_adicion',
+      title: 'Rango de adición',
+      paso: 0.25,
+      aplica: (doc) => doc?.tipo_de_mica === 'bifocal',
+    }),
     defineField({
       name: 'tratamiento',
       title: 'Tratamiento',
-      type: 'array',
-      of: [{type: 'string'}],
+      type: 'string',
       options: {list: ['Blanco', 'AR', 'Blue Ray', 'Espejo']},
-      validation: (rule) =>
-        rule.custom((value, context) =>
-          context.document?.tipo_fotosensible === 'polarizado' && (value?.length ?? 0) > 1
-            ? 'Las micas polarizadas solo pueden tener un tratamiento'
-            : true,
-        ),
     }),
     defineField({
       name: 'tratamiento_fotosensible',
